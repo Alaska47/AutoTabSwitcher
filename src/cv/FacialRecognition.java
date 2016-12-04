@@ -2,6 +2,7 @@ package cv;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +44,8 @@ public class FacialRecognition {
 
 		this.capture = new VideoCapture();
 		this.faceCascade = new CascadeClassifier();
-		this.faceCascade.load("C:\\opencv\\build\\etc\\lbpcascades\\lbpcascade_frontalface.xml");
+		File cascade = new File("res\\cv\\lbpcascades\\lbpcascade_frontalface.xml");
+		this.faceCascade.load(cascade.getAbsolutePath());
 		this.absoluteFaceSize = 0;
 
 		System.out.println("loaded everything");
@@ -181,18 +183,10 @@ public class FacialRecognition {
 
 		// each rectangle in faces is a face: draw them!
 		Rect[] facesArray = faces.toArray();
-		if(facesArray.length > 0) {
-			System.out.println("face detected");
-			int indexMax = 0;
-			double areaMax = 0.0;
-			for(int i = 0; i < facesArray.length; i++) {
-				if(facesArray[i].area() > areaMax) {
-					areaMax = facesArray[i].area();
-					indexMax = i;
-				}
-			}
-			Core.rectangle(frame, facesArray[indexMax].tl(), facesArray[indexMax].br(), new Scalar(0, 255, 0), 3);
-		}	
+		for(int i = 0; i < facesArray.length; i++) {
+			Core.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0), 3);
+
+		}
 	}
 
 
