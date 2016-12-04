@@ -44,7 +44,7 @@ public class FacialRecognition {
 
 		this.capture = new VideoCapture();
 		this.faceCascade = new CascadeClassifier();
-		File cascade = new File("res\\cv\\lbpcascades\\lbpcascade_frontalface.xml");
+		File cascade = new File("res\\cv\\haarcascades\\haarcascade_frontalface_default.xml");
 		this.faceCascade.load(cascade.getAbsolutePath());
 		this.absoluteFaceSize = 0;
 
