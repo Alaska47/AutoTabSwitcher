@@ -26,7 +26,9 @@ public class FacialRecognition {
 	private org.opencv.highgui.VideoCapture capture;
 	private boolean cameraActive;
 
-
+	
+	
+	
 	//TEMP
 	ImageJPanel panel;
 
@@ -47,8 +49,6 @@ public class FacialRecognition {
 		File cascade = new File("res\\cv\\haarcascades\\haarcascade_frontalface_default.xml");
 		this.faceCascade.load(cascade.getAbsolutePath());
 		this.absoluteFaceSize = 0;
-
-		System.out.println("loaded everything");
 
 		startCamera();
 	}
@@ -134,10 +134,12 @@ public class FacialRecognition {
 				if (!frame.empty())
 				{
 					// face detection
-					this.detectAndDisplay(frame);
+					Rect[] faces = this.detectAndDisplay(frame);
 
 					// convert the Mat object (OpenCV) to Image (JavaFX)
 					imageToShow = matToBufferedImage(frame, null);
+					
+					
 				}
 
 			}
@@ -157,7 +159,7 @@ public class FacialRecognition {
 	 * @param frame
 	 *            it looks for faces in this frame
 	 */
-	private void detectAndDisplay(Mat frame)
+	private Rect[] detectAndDisplay(Mat frame)
 	{
 		MatOfRect faces = new MatOfRect();
 		Mat grayFrame = new Mat();
@@ -185,8 +187,8 @@ public class FacialRecognition {
 		Rect[] facesArray = faces.toArray();
 		for(int i = 0; i < facesArray.length; i++) {
 			Core.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0), 3);
-
 		}
+		return facesArray;
 	}
 
 
